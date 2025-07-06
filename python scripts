@@ -1,0 +1,39 @@
+import re
+
+def extract_emails(input_file, output_file):
+    """
+    Extracts all email addresses from input_file and writes them to output_file.
+
+    Args:
+        input_file (str): Path to the input text file
+        output_file (str): Path to the output text file
+    """
+    
+    email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+
+    try:
+       
+        with open(input_file, 'r') as file:
+            content = file.read()
+
+       
+        emails = re.findall(email_pattern, content)
+
+       
+        with open(output_file, 'w') as file:
+            for email in emails:
+                file.write(email + '\n')
+
+        print(f"Successfully extracted {len(emails)} email addresses to {output_file}")
+
+    except FileNotFoundError:
+        print(f"Error: The file {input_file} was not found.")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+
+input_filename = 'myfile.txt'
+output_filename = 'myfile2.txt'
+
+extract_emails(input_filename, output_filename)
+
